@@ -18,12 +18,16 @@ if ($fromCurrency === 'EUR') {
     $fromRate = $rates->rates->$fromCurrency;
 }
 
-if (!isset($rates->rates->$toCurrency)) {
-    echo "Invalid currency input for converting to." . PHP_EOL;
-    exit(1);
+if ($toCurrency === 'EUR') {
+    $toRate = 1.0;
+} else {
+    if (!isset($rates->rates->$toCurrency)) {
+        echo "Invalid currency input for converting to." . PHP_EOL;
+        exit(1);
+    }
+    $toRate = $rates->rates->$toCurrency;
 }
-$toRate = $rates->rates->$toCurrency;
 
 $convertedAmount = ($amount / $fromRate) * $toRate;
 
-echo number_format($convertedAmount, 2) . PHP_EOL;
+echo number_format($convertedAmount, 2) . ' ' . $toCurrency . PHP_EOL;
